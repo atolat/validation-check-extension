@@ -1,7 +1,7 @@
 # validation-check-extension
 Chrome Extension to check validation scripts.
 
--Download extension, unzip
+-Download extension (Click on "Clone or Download", select "Download Zip"), unzip
 
 -Go to chrome extensions and enable developer mode
 
