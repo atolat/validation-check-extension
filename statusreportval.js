@@ -59,7 +59,7 @@ window._val_global.z_refresh = true;
 
 //Reapply page settings periodically
 /*
-This function will periodically repply all the page settings (re-add buttons/tooltips) to the current scope by invoking the apply_page_settings function every 1000ms. This is required because clarity tends to remove foreign added elements from the DOM. 
+This function will periodically reapply all the page settings (re-add buttons/tooltips) to the current scope by invoking the apply_page_settings function every 1000ms. This is required because clarity tends to remove foreign added elements from the DOM. 
 */
 window._val_global.apply_page_settings = function () {
     var self_help_applied;
