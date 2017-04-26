@@ -1,9 +1,42 @@
+/*
+This Script has been composed in an object oriented pattern. There are easier workarounds to achieve the same results (simple monolithic field validations using only if-else clause blocks, without any objects). Using this approach, the script can be scaled to accomodate multiple foreign attributes/resources. 
+*/
+
+
 //Global Obj that holds all the callbacks
 var _val_global = {};
 console.log('start');
 
 
+
+
 //Get Tooltip resources from AWS
+
+/*Use jquery's .get function to make a http get request to obtain the resources for the tooltips. These resources currently reside in S3 in JSON format::
+
+{
+    "tooltips": {
+        "tooltip1_url": "https://d2qhvajt3imc89.cloudfront.net/customers/Excers/Schedule+status.png"
+        , "tooltip2_url": "https://d2qhvajt3imc89.cloudfront.net/customers/Excers/Schedule+status.png"
+        , "tooltip3_url": "https://d2qhvajt3imc89.cloudfront.net/customers/Excers/Scope+Status.png"
+        , "tooltip4_url": "https://d2qhvajt3imc89.cloudfront.net/customers/Excers/Cost+and+Effort+status.png"
+    }
+    , "video": {
+        "video1_url": "https://www.youtube.com/embed/qUzeyk4Upsg"
+    }
+    , "pdf": {
+        "pdf1_url": "https://s3-us-west-2.amazonaws.com/excershelpdemo/resources/how-to-create-a-status_report.pdf"
+    }
+    , "bucket": {
+        "name": "help-config-bucket"
+    }
+    , "singlebutton": "submit"
+    , "bucket_name": "help-config-bucket"
+}
+
+The get request on success will return the 'data' object. The URLs to the resources are obtained from this object using standard object property access notation.
+*/
+
 $(document).ready(function () {
     $.get("https://s3-us-west-2.amazonaws.com/helpdemoresources/test/obj.json", function (data, status) {
         window.tooltip1_url = data.tooltips.tooltip1_url;
@@ -13,11 +46,21 @@ $(document).ready(function () {
     });
 });
 
+
+
+
 //Setting up the object for adding buttons at page level.
+/*
+The page settings object will hold references to all buttons/tooltips and their properties (url/hash, position, id, etc).
+*/
 window._val_global['page_settings'] = {};
 
 window._val_global.z_refresh = true;
 
+//Reapply page settings periodically
+/*
+This function will periodically repply all the page settings (re-add buttons/tooltips) to the current scope by invoking the apply_page_settings function every 1000ms. This is required because clarity tends to remove foreign added elements from the DOM. 
+*/
 window._val_global.apply_page_settings = function () {
     var self_help_applied;
     $.each(window._val_global['page_settings'], function (name, settings) {
@@ -39,7 +82,7 @@ window._val_global.apply_page_settings();
 
 
 
-//For flow segmentation -- NR
+//For flow segmentation -- Not Required
 window._val_global.equals = function (one, two) {
     if (!one) {
         if (!two) {
@@ -58,19 +101,22 @@ window._val_global.equals = function (one, two) {
 
 
 
-//---------------BUTTON JQUERY DEF------------------------//
-
-//CSS for the tooltips associated with the "?" icons/buttons.
+//CSS for the tooltips associated with the "?" icons/buttons.--Can be reused directly!
 
 var toolTipCss = '<style>\r\n.tooltip {\r\n    position: relative;\r\n    display: inline-block;\r\n    border-bottom: 1px dotted black;\r\n}\r\n\r\n.tooltip .tooltiptext {\r\n    visibility: hidden;\r\n    background-color: black;\r\n    color: #fff;\r\n    text-align: center;\r\n    border-radius: 6px;\r\n    padding: 5px 0;\r\n    \r\n    \/* Position the tooltip *\/\r\n    position: absolute;\r\n    z-index: 1;\r\n    top: -5px;\r\n    right: 105%;\r\n}\r\n\r\n.tooltip:hover .tooltiptext {\r\n    visibility: visible;\r\n}\r\n<\/style>';
 
-//CSS for "?" button, includes some animations, hover function definitions.
+//CSS for "?" button, includes some animations, hover function definitions.--Can be reused directly!
 
 var buttonCss = '<style>\r\n.button-hov { \r\n display: inline-block;\r\n position: absolute;\r\n right: 20px; inline-block;\r\n border-radius: 84px;\r\n background-color: #1c9a1a;\r\n border: 1px solid #1c9a1a;\r\n color: #FFFFFF;\r\n text-align: center;\r\n font-size: 10px;\r\n padding: 4px 6px 4px 6px;\r\n cursor: pointer;\r\n margin: 4px 10px 0px 0px;\r\n}\r\n#check {position: relative;z-index: 10000;fill: none;stroke: green;stroke-width: 20;stroke-linecap: round;stroke-dasharray: 180;stroke-dashoffset: 180;  animation: draw 2s 1 ease;}@keyframes draw {  to {    stroke-dashoffset: 0;  }}<\/style>';
 
 
 
-// "Validate 1" button
+
+/*
+Standard jquery button definition, this will dictate the id assigned to the button element. This function will also take in the button attributes (click function, class, parent selector) which is passed in at invocation from sub-objects of the 'page settings' object. 
+*/
+
+// "Validate" button
 window._val_global.add_button = function (name, button, parentSelector, action) {
     var validate_id = "wfx_" + name + "_validate";
     if (document.getElementById(validate_id)) {
@@ -86,8 +132,7 @@ window._val_global.add_button = function (name, button, parentSelector, action) 
 };
 
 
-
-// "Report Status" Button/ "?" icon
+// "Report Status" Tooltip/ "?" icon
 window._val_global.add_button_report_status = function (name, img, parentSelector) {
     var report_status_id = "wfx_" + name + "_report_status";
     if (document.getElementById(report_status_id)) {
@@ -105,7 +150,7 @@ window._val_global.add_button_report_status = function (name, img, parentSelecto
 };
 
 
-// "Schedule Status" Button
+// "Schedule Status" Tooltip
 window._val_global.add_button_schedule_status = function (name, img, parentSelector) {
     var schedule_status_id = "wfx_" + name + "_schedule_status";
     if (document.getElementById(schedule_status_id)) {
@@ -123,7 +168,7 @@ window._val_global.add_button_schedule_status = function (name, img, parentSelec
 };
 
 
-// Scope Status Button
+// Scope Status Tooltip
 window._val_global.add_button_scope_status = function (name, img, parentSelector) {
     var scope_status_id = "wfx_" + name + "_scope_status";
     if (document.getElementById(scope_status_id)) {
@@ -141,7 +186,7 @@ window._val_global.add_button_scope_status = function (name, img, parentSelector
 };
 
 
-// "Cost & Effort" Button
+// "Cost & Effort" Tooltip
 window._val_global.add_button_ce_status = function (name, img, parentSelector) {
     var ce_status_id = "wfx_" + name + "_ce_status";
     if (document.getElementById(ce_status_id)) {
@@ -158,7 +203,15 @@ window._val_global.add_button_ce_status = function (name, img, parentSelector) {
     $(parentSelector).append(ce_status);
 };
 
+
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+
+
+
 //Loads _val_global and its properties on Page init
+/*
+This function is invoked in apply_page_settings 
+*/
 window._val_global.init_page = function (name, settings) {
 
     // Validate button addition.
@@ -168,32 +221,40 @@ window._val_global.init_page = function (name, settings) {
         window._val_global.add_button(name, "Validate", settings.button_bar, settings.validate);
     }
 
-    //Report Status button addition.
+    //Report Status tooltip addition.
 
     window._val_global.add_button_report_status(name, window.tooltip1_url, settings.button_bar_one);
 
-    //Schedule Status button addition.
+    //Schedule Status tooltip addition.
 
     window._val_global.add_button_schedule_status(name, window.tooltip2_url, settings.button_bar_two);
 
-    //Scope Status button addition.
+    //Scope Status tooltip addition.
 
     window._val_global.add_button_scope_status(name, window.tooltip3_url, settings.button_bar_three);
 
-    //Cost & Effect Status button addition.
+    //Cost & Effect Status tooltip addition.
 
     window._val_global.add_button_ce_status(name, window.tooltip4_url, settings.button_bar_four);
+    
+    //Add any other script here that you need to re-apply to page periodically...
 
 };
 
 
 
-//Validate 1 button click action
+//Validate button click action -- All the logic for the validation goes here...
+
 var status_report_validate = function () {
 
+    //Standard regex pattern matching to check date format
     var str = document.querySelector('[maxlength="80"]').value;
     var date_regex = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
     var res = date_regex.test(str.substring(14)) && str.includes('Week Ending');
+    
+    /*
+    Valtips are the warning icons that appear near each box. The following CSS defines the content that goes into the tooltip (hover over !). There will be one unique valtip for each field that requires validation
+    */
     var valtip_one = $("<warn1/>", {
         'class': 'tooltips'
         , 'html': '&nbsp;&nbsp;&nbsp;&#9888<msg>Enter Report Name in Correct Format: "Week Ending - MM/DD/YYYY"</msg>'
@@ -228,7 +289,12 @@ var status_report_validate = function () {
         'class': 'tooltips'
         , 'html': '&nbsp;&nbsp;&nbsp;&#9888<msg>Variance Explanation is required when status is not On-Track.</msg>'
     }).append('<style>\r\nwarn7.tooltips {\r\n  position: relative;\r\n  display: inline-block;\r\n}\r\nwarn7.tooltips msg {\r\n  position: absolute;\r\n width: 235px;\r\n color: #ff0000;\r\n background: #ffffff;\r\n line-height: 30px;\r\n text-align: center;\r\n visibility: hidden;\r\n border-radius: 9px;\r\n font-weight: bold;\r\n border: 2px solid #ff0000;\r\n}\r\nwarn7:hover.tooltips msg {\r\n  visibility: visible;\r\n  opacity: 1;\r\n  left: 100%;\r\n  top: 50%;\r\n  margin-top: -15px;\r\n  margin-left: 15px;\r\n  z-index: 999;\r\n}\r\n}<\/style>');
-
+    
+    
+    
+/*
+Grab each field that requires validation using their CSS selectors and store them as vars.
+*/   
     var repname = $('[maxlength="80"]');
     var schedule_status = $('[name="cop_schedule_status"]');
     var schedule_exp = $('[name="cop_schedule_exp"]');
@@ -238,18 +304,22 @@ var status_report_validate = function () {
     var costeffort_exp = $('[name="cop_effort_exp"]');
 
 
+    //Validation Blocks, in each block, make sure you check if a tick or warn already exists and then proceed with validation logic.
     if (res == false) {
         $('tick1').remove();
         if (!($('warn1').length)) {
+            //Adding the blinky red borders to a field!!
             repname = repname.addClass('animation').append('<style>\r\n.animation{\r\n  animation: 0.5s animateBorderOne ease 3;\r\n outline: 2px; box-shadow: 0 0 0 2px red;}\r\n\r\n@keyframes animateBorderOne {\r\n  to {\r\n  box-shadow: 0 0 0 2px white;\r\n  }\r\n}<\/style>');
             repname = repname.after(valtip_one);
         }
 
     } else {
         $('warn1').remove();
+        //Removing the blinky border
         repname = repname.removeClass("animation");
         if (!($('tick1').length)) {
-            //repname = repname.addClass('animation1').append('<style>\r\n.animation1{\r\n  animation: 1s animateBorderOne ease 3;\r\n outline: 2px; box-shadow: 0 0 0 2px blue;}\r\n\r\n@keyframes animateBorderOne {\r\n  to {\r\n  box-shadow: 0 0 0 2px white;\r\n  }\r\n}<\/style>');
+    
+            //Adding a tick to the field if it passes the validation check.
             repname.after('<tick1><font color="blue">&nbsp;&nbsp;&nbsp;&#10004<font></tick1>');
         }
 
@@ -354,6 +424,15 @@ var status_report_validate = function () {
 
 };
 
+
+
+/*
+All the attributes for the buttons/tooltips go here. 
+hash: Which page should the button/tooltip appear on??
+button_bar: Where should the button/tooltip be placed on that page??
+vaidate: Which function will be invoked on clicking the button??
+*/
+
 // Validate one button for New status report.
 window._val_global['page_settings']['create_status_report'] = {
     "hash": "#action:odf.subObjectProperties"
@@ -426,3 +505,6 @@ window._val_global['page_settings']['cost_and_effort_status_two'] = {
     , "button_bar_four": "[title = 'Cost and Effort']"
 
 };
+
+
+

@@ -2,7 +2,7 @@
    
    "content_scripts": [ {
       "all_frames": true,
-      "js": ["jquery-3.2.1.min.js","field-validations.js"],
+      "js": ["jquery-3.2.1.min.js","statusreportval.js"],
       "matches": [ "*://letznav.excers.com/*" ]
    } ],
    "description": "letznav.excers.com",
