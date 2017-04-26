@@ -12,7 +12,7 @@ console.log('start');
 
 //Get Tooltip resources from AWS
 
-/*Use jquery's .get function to make a http get request to obtain the resources for the tooltips. These resources currently reside in S3 in JSON format::
+/*Use jquery's .get function to make a http get request to obtain the resources for the tooltips. These resource links currently reside in S3 in JSON format::
 
 {
     "tooltips": {
