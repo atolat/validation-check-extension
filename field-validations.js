@@ -72,7 +72,7 @@ var buttonCss = '<style>\r\n.button-hov { \r\n display: inline-block;\r\n positi
 
 //"Validate 1" button
 window._val_global.add_button = function (name, button, parentSelector, action) {
-    var validate_id = "wfx_" + name + "_validate";
+    var validate_id = "sval_" + name + "_validate";
     if (document.getElementById(validate_id)) {
         return;
     }
@@ -89,7 +89,7 @@ window._val_global.add_button = function (name, button, parentSelector, action) 
 
 // "Report Status" Button/ "?" icon
 window._val_global.add_button_report_status = function (name, img, parentSelector) {
-    var report_status_id = "wfx_" + name + "_report_status";
+    var report_status_id = "sval_" + name + "_report_status";
     if (document.getElementById(report_status_id)) {
         return;
     }
@@ -107,7 +107,7 @@ window._val_global.add_button_report_status = function (name, img, parentSelecto
 
 // "Schedule Status" Button
 window._val_global.add_button_schedule_status = function (name, img, parentSelector) {
-    var schedule_status_id = "wfx_" + name + "_schedule_status";
+    var schedule_status_id = "sval_" + name + "_schedule_status";
     if (document.getElementById(schedule_status_id)) {
         return;
     }
@@ -125,7 +125,7 @@ window._val_global.add_button_schedule_status = function (name, img, parentSelec
 
 // Scope Status Button
 window._val_global.add_button_scope_status = function (name, img, parentSelector) {
-    var scope_status_id = "wfx_" + name + "_scope_status";
+    var scope_status_id = "sval_" + name + "_scope_status";
     if (document.getElementById(scope_status_id)) {
         return;
     }
@@ -143,7 +143,7 @@ window._val_global.add_button_scope_status = function (name, img, parentSelector
 
 // "Cost & Effort" Button
 window._val_global.add_button_ce_status = function (name, img, parentSelector) {
-    var ce_status_id = "wfx_" + name + "_ce_status";
+    var ce_status_id = "sval_" + name + "_ce_status";
     if (document.getElementById(ce_status_id)) {
         return;
     }
