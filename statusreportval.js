@@ -65,13 +65,11 @@ window._val_global['page_settings'] = {};
 This function will periodically reapply all the page settings (re-add buttons/tooltips) to the current scope by invoking the apply_page_settings function every 1000ms. This is required because clarity tends to remove foreign added elements from the DOM. 
 */
 window._val_global.apply_page_settings = function () {
-    var self_help_applied;
+
     $.each(window._val_global['page_settings'], function (name, settings) {
         if (window.location.hash.indexOf(settings.hash) != -1) {
             window._val_global.init_page(name, settings);
-            if (settings.self_help) {
-                self_help_applied = true;
-            }
+
         }
     });
 
@@ -82,26 +80,6 @@ window._val_global.apply_page_settings = function () {
 };
 
 window._val_global.apply_page_settings();
-
-
-
-//For flow segmentation -- Not Required
-window._val_global.equals = function (one, two) {
-    if (!one) {
-        if (!two) {
-            return true;
-        } else {
-            return false;
-        }
-    } else {
-        if (!two) {
-            return false;
-        } else {
-            return one == two;
-        }
-    }
-}
-
 
 
 //CSS for the tooltips associated with the "?" icons/buttons.--Can be reused directly!
@@ -239,7 +217,7 @@ window._val_global.init_page = function (name, settings) {
     //Cost & Effect Status tooltip addition.
 
     window._val_global.add_button_ce_status(name, window.tooltip4_url, settings.button_bar_four);
-    
+
     //Add any other script here that you need to re-apply to page periodically...
 
 };
@@ -254,7 +232,7 @@ var status_report_validate = function () {
     var str = document.querySelector('[maxlength="80"]').value;
     var date_regex = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
     var res = date_regex.test(str.substring(14)) && str.includes('Week Ending');
-    
+
     /*
     Valtips are the warning icons that appear near each box. The following CSS defines the content that goes into the tooltip (hover over !). There will be one unique valtip for each field that requires validation
     */
@@ -292,12 +270,12 @@ var status_report_validate = function () {
         'class': 'tooltips'
         , 'html': '&nbsp;&nbsp;&nbsp;&#9888<msg>Variance Explanation is required when status is not On-Track.</msg>'
     }).append('<style>\r\nwarn7.tooltips {\r\n  position: relative;\r\n  display: inline-block;\r\n}\r\nwarn7.tooltips msg {\r\n  position: absolute;\r\n width: 235px;\r\n color: #ff0000;\r\n background: #ffffff;\r\n line-height: 30px;\r\n text-align: center;\r\n visibility: hidden;\r\n border-radius: 9px;\r\n font-weight: bold;\r\n border: 2px solid #ff0000;\r\n}\r\nwarn7:hover.tooltips msg {\r\n  visibility: visible;\r\n  opacity: 1;\r\n  left: 100%;\r\n  top: 50%;\r\n  margin-top: -15px;\r\n  margin-left: 15px;\r\n  z-index: 999;\r\n}\r\n}<\/style>');
-    
-    
-    
-/*
-Grab each field that requires validation using their CSS selectors and store them as vars.
-*/   
+
+
+
+    /*
+    Grab each field that requires validation using their CSS selectors and store them as vars.
+    */
     var repname = $('[maxlength="80"]');
     var schedule_status = $('[name="cop_schedule_status"]');
     var schedule_exp = $('[name="cop_schedule_exp"]');
@@ -321,7 +299,7 @@ Grab each field that requires validation using their CSS selectors and store the
         //Removing the blinky border
         repname = repname.removeClass("animation");
         if (!($('tick1').length)) {
-    
+
             //Adding a tick to the field if it passes the validation check.
             repname.after('<tick1><font color="blue">&nbsp;&nbsp;&nbsp;&#10004<font></tick1>');
         }
@@ -508,6 +486,3 @@ window._val_global['page_settings']['cost_and_effort_status_two'] = {
     , "button_bar_four": "[title = 'Cost and Effort']"
 
 };
-
-
-
