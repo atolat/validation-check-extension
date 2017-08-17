@@ -14,4 +14,8 @@ Chrome Extension to check validation scripts.
 ```
  "js": ["jquery-3.2.1.min.js","statusreportval.js","validationtest1.js",...],
  ```
+-Modify "matches" parameter to match your local clarity instance url.
+```
+"matches": [ "*://localhost:8080/*" ]
+```
 -Reload extension, check console for error logs.
