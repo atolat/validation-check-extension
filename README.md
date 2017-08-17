@@ -9,8 +9,9 @@ Chrome Extension to check validation scripts.
 
 -Create new validation scripts in the extension folder
 
--To test scripts, add script to manifest.json
+-To test scripts, add script to manifest.json.
 
+-Add all dependencies here, eg. jquery library.
 ```
  "js": ["jquery-3.2.1.min.js","statusreportval.js","validationtest1.js",...],
  ```
