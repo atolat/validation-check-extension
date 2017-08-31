@@ -1,5 +1,5 @@
 /*
-This Script has been composed in an object oriented pattern, to maximize reusability. There are easier workarounds to achieve the same results (simple monolithic field validations using only if-else clause blocks, without any objects). 
+Custom Validations for status report page
 */
 
 
