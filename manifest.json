@@ -3,9 +3,9 @@
    "content_scripts": [ {
       "all_frames": true,
       "js": ["jquery-3.2.1.min.js","statusreportval.js"],
-      "matches": [ "*://letznav.excers.com/*" ]
+      "matches": [ "*://localhost:1530/*" ]
    } ],
-   "description": "letznav.excers.com",
+   "description": "CAPPM Custom Validations",
    
    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhTvLrQaMd7DaIVdtn1hMWxxL+TIVmhPL51H3nCyxpDvriHR+Suk4qcZ2n0NeCLoDYS4gB1tdwJHv4nnb7ggXAmh46Ca7MvjGMmBRdREOffjPexb9qIyMnD0VFgivTm7Gt2TRgQbfyxYcX9KHiA9rNuRPqLqQSRYxaorHWux8MuCnBbFHg+OlP5EJx8x4m1jnWDJ2DF/dXQ9fcRJRQUGa9fxaBK4Hq9GTKu5wOv+/XVnGwVZvPbP+nBnW4Y8MxgWMEd+G4IYYEm8oXwq6CmgZG9DeBtYiQUiHaKUNUJ4CawoOeR0rY0M7Xjd9l6JON9UAZFsi+FsROQJFJ6vc6nECJwIDAQAB",
    "manifest_version": 2,
